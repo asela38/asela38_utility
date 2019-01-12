@@ -1,0 +1,66 @@
+*Emacs Configuration*
+
+
+* General Configuration
+
+** Get Y or N Questions
+
+#+BEGIN_SRC emacs-lisp
+
+(defalias 'yes-or-no-p 'y-or-n-p)
+
+#+END_SRC
+
+** Deactivate Bell Ring
+
+#+BEGIN_SRC emacs-lisp
+
+(setq ring-bell-function 'ignore)
+
+#+END_SRC
+
+
+* ANSI Term
+
+#+BEGIN_SRC emacs-lisp
+
+  (defvar my-term-shell "/bin/bash")
+  (defadvice ansi-term (before force-bash)
+    (interactive (list my-term-shell)))
+  (ad-activate 'ansi-term)
+
+  (global-set-key (kbd "<s-return>") 'ansi-term)
+
+#+END_SRC
+
+* Packages
+** org-bullets
+#+BEGIN_SRC emacs-lisp
+
+  (use-package org-bullets
+    :ensure t
+    :config
+    (add-hook 'org-mode-hook (lambda () (org-bullets-mode))))
+
+#+END_SRC
+** which-key
+#+BEGIN_SRC emacs-lisp
+
+(use-package which-key
+  :ensure t
+  :init
+  (which-key-mode))
+
+#+END_SRC
+
+
+** beacon
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package beacon
+  :ensure t
+  :init
+  (beacon-mode 1))
+
+#+END_SRC
