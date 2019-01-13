@@ -2,7 +2,21 @@
 
 
 * General Configuration
+** Remove help from start up page
 
+#+BEGIN_SRC emacs-lisp
+
+(setq inhibit-startup-message t)
+
+#+END_SRC
+
+** Remove Tool Bar
+
+   #+BEGIN_SRC emacs-lisp
+
+(tool-bar-mode -1)
+   
+   #+END_SRC
 ** Get Y or N Questions
 
 #+BEGIN_SRC emacs-lisp
@@ -19,7 +33,13 @@
 
 #+END_SRC
 
+** Remove last line scroll jump 
 
+#+BEGIN_SRC emacs-lisp
+
+  (setq scroll-conservatively 100)
+
+#+END_SRC
 * ANSI Term
 
 #+BEGIN_SRC emacs-lisp
@@ -63,4 +83,56 @@
   :init
   (beacon-mode 1))
 
+#+END_SRC
+** IDO 
+
+#+BEGIN_SRC emacs-lisp
+
+  (setq ido-enable-flex-matching nil)
+  (setq ido-create-new-buffer 'always)
+  (setq ido-eveywhere t)
+  (ido-mode 1)
+
+#+END_SRC
+
+*** ido-vertical
+
+#+BEGIN_SRC emacs-lisp
+
+  (use-package ido-vertical-mode
+    :ensure t
+    :init
+    (ido-vertical-mode 1))
+
+  (setq ido-vertical-define-keys 'C-n-and-C-p-only)
+
+#+END_SRC
+
+** smex
+
+#+BEGIN_SRC emacs-lisp
+
+  (use-package smex
+    :ensure t
+    :init (smex-initialize)
+    :bind
+    ("M-x" . smex))
+
+#+END_SRC
+
+** ibuffer
+
+#+BEGIN_SRC emacs-lisp
+
+  (global-set-key (kbd "C-x C-b") 'ibuffer)
+
+#+END_SRC
+
+** avy
+
+#+BEGIN_SRC emacs-lisp
+  (use-package avy
+    :ensure t
+    :bind
+    ("M-s" . avy-goto-char))
 #+END_SRC
