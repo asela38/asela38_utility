@@ -48,7 +48,7 @@
 
   (defun config-visit ()
     (interactive)
-    (find-file "~/Workspace/github/my_config/config.org"))
+    (find-file my-config-file-location))
 
   (global-set-key (kbd "C-c e") 'config-visit)
 
@@ -58,7 +58,7 @@
 
   (defun config-reload ()
     (interactive)
-    (org-babel-load-file (expand-file-name "~/Workspace/github/my_config/config.org")))
+    (org-babel-load-file (expand-file-name my-config-file-location)))
 
   (global-set-key (kbd "C-c r") 'config-reload)
 
@@ -79,6 +79,24 @@ Move current cursor to new window
     (balance-windows)
     (other-window 1))
   (global-set-key (kbd "C-x 3") 'split-and-follow-vertically)
+#+END_SRC
+** Recently Opened Files
+#+BEGIN_SRC emacs-lisp
+
+(recentf-mode 1)
+(global-set-key (kbd "<f7>") 'recentf-open-files)
+
+#+END_SRC
+* DIRED
+** dired-x
+#+BEGIN_SRC emacs-lisp
+
+(require 'dired-x)
+
+#+END_SRC
+** Split Window Copying
+#+BEGIN_SRC emacs-lisp
+(setq dired-dwim-target t)
 #+END_SRC
 * ANSI Term
 

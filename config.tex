@@ -1,0 +1,246 @@
+% Created 2019-01-14 Mon 11:01
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\date{\today}
+\title{}
+\hypersetup{
+ pdfauthor={},
+ pdftitle={},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 26.1 (Org mode 9.1.9)}, 
+ pdflang={English}}
+\begin{document}
+
+\tableofcontents
+
+\textbf{Emacs Configuration}
+
+
+\section{General Configuration}
+\label{sec:orgec41528}
+\subsection{Remove help from start up page}
+\label{sec:org565f913}
+
+\begin{verbatim}
+
+(setq inhibit-startup-message t)
+
+\end{verbatim}
+
+\subsection{Remove Tool Bar}
+\label{sec:org952fc43}
+
+\begin{verbatim}
+
+(tool-bar-mode -1)
+
+\end{verbatim}
+\subsection{Get Y or N Questions}
+\label{sec:org532ea4f}
+
+\begin{verbatim}
+
+(defalias 'yes-or-no-p 'y-or-n-p)
+
+\end{verbatim}
+
+\subsection{Deactivate Bell Ring}
+\label{sec:org51e9db8}
+
+\begin{verbatim}
+
+(setq ring-bell-function 'ignore)
+
+\end{verbatim}
+
+\subsection{Remove last line scroll jump}
+\label{sec:org9e32c70}
+
+
+\begin{verbatim}
+
+(setq scroll-conservatively 100)
+
+\end{verbatim}
+
+\subsection{Config Edit/Reload}
+\label{sec:org3eba7a5}
+\subsubsection{Edit}
+\label{sec:org5b96ea6}
+\begin{verbatim}
+
+(defun config-visit ()
+  (interactive)
+  (find-file my-config-file-location))
+
+(global-set-key (kbd "C-c e") 'config-visit)
+
+\end{verbatim}
+\subsubsection{Reload}
+\label{sec:org49931cb}
+\begin{verbatim}
+
+(defun config-reload ()
+  (interactive)
+  (org-babel-load-file (expand-file-name my-config-file-location)))
+
+(global-set-key (kbd "C-c r") 'config-reload)
+
+\end{verbatim}
+\subsection{Window Splitting Function}
+\label{sec:orgb27e249}
+Move current cursor to new window
+\begin{verbatim}
+(defun split-and-follow-horizontally ()
+  (interactive)
+  (split-window-below)
+  (balance-windows)
+  (other-window 1))
+(global-set-key (kbd "C-x 2") 'split-and-follow-horizontally)
+
+(defun split-and-follow-vertically ()
+  (interactive)
+  (split-window-right)
+  (balance-windows)
+  (other-window 1))
+(global-set-key (kbd "C-x 3") 'split-and-follow-vertically)
+\end{verbatim}
+\section{ANSI Term}
+\label{sec:org9e679f4}
+
+\begin{verbatim}
+
+(defvar my-term-shell "/bin/bash")
+(defadvice ansi-term (before force-bash)
+  (interactive (list my-term-shell)))
+(ad-activate 'ansi-term)
+
+(global-set-key (kbd "<s-return>") 'ansi-term)
+
+\end{verbatim}
+
+\section{Packages}
+\label{sec:orgebc3c48}
+\subsection{org-bullets}
+\label{sec:org860f136}
+\begin{verbatim}
+
+(use-package org-bullets
+  :ensure t
+  :config
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode))))
+
+\end{verbatim}
+\subsection{which-key}
+\label{sec:orgf815586}
+\begin{verbatim}
+
+(use-package which-key
+  :ensure t
+  :init
+  (which-key-mode))
+
+\end{verbatim}
+
+\subsection{beacon}
+\label{sec:org508af00}
+
+\begin{verbatim}
+
+(use-package beacon
+  :ensure t
+  :init
+  (beacon-mode 1))
+
+\end{verbatim}
+\subsection{IDO}
+\label{sec:org94ce1f5}
+
+\begin{verbatim}
+
+(setq ido-enable-flex-matching nil)
+(setq ido-create-new-buffer 'always)
+(setq ido-eveywhere t)
+(ido-mode 1)
+
+\end{verbatim}
+
+\subsubsection{ido-vertical}
+\label{sec:orgf798dc8}
+
+\begin{verbatim}
+
+(use-package ido-vertical-mode
+  :ensure t
+  :init
+  (ido-vertical-mode 1))
+
+(setq ido-vertical-define-keys 'C-n-and-C-p-only)
+
+\end{verbatim}
+
+\subsection{smex}
+\label{sec:org496f03e}
+
+\begin{verbatim}
+
+(use-package smex
+  :ensure t
+  :init (smex-initialize)
+  :bind
+  ("M-x" . smex))
+
+\end{verbatim}
+
+\subsection{ibuffer}
+\label{sec:orge1b2d55}
+
+\begin{verbatim}
+
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+
+\end{verbatim}
+
+\subsection{avy}
+\label{sec:orge69aafe}
+
+
+\begin{verbatim}
+(use-package avy
+  :ensure t
+  :bind
+  ("M-s" . avy-goto-char))
+\end{verbatim}
+\subsection{Switch-window}
+\label{sec:orge44f966}
+
+\begin{verbatim}
+
+(use-package switch-window
+  :ensure t
+  :config
+  (setq switch-window-input-style 'minibuffer)
+  (setq switch-window-increase 4)
+  (setq switch-window-threashold 2)
+  (setq switch-window-shortcut-style 'qwerty)
+  (setq switch-window-qwerty-shortcuts
+	'("a" "s" "d" "f" "h" "j" "k" "l"))
+  :bind
+  ([remap other-window] . switch-window))
+
+\end{verbatim}
+\end{document}
