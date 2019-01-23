@@ -226,7 +226,29 @@ Move current cursor to new window
   (setq evil-shift-round nil)
   (setq evil-want-C-u-scroll t)
   :config ;; tweak evil after loading it
-  (evil-mode))
+ )
   
+
+#+END_SRC
+** org-present
+
+#+BEGIN_SRC emacs-lisp
+
+(use-package org-present
+    :ensure t
+    :init
+     (add-hook 'org-present-mode-hook
+               (lambda ()
+                 (org-present-big)
+                 (org-display-inline-images)
+                 (org-present-hide-cursor)
+                 (org-present-read-only)))
+     (add-hook 'org-present-mode-quit-hook
+               (lambda ()
+                 (org-present-small)
+                 (org-remove-inline-images)
+                 (org-present-show-cursor)
+                 (org-present-read-write))))
+
 
 #+END_SRC
