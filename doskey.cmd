@@ -1,3 +1,26 @@
+/**
+1. Create a file to store your macros (DOSKEYs). 
+  "C:\bat\macros.doskey"†
+
+  ls=dir $* $T
+  up=cd.. $T
+  ex=exit $T
+  np=notepad
+2. Go to the registry editor. 
+
+HKEY_LOCAL_MACHINE\Software\Microsoft\Command Processor\
+
+3. Right-click and add a new "String Value" sub-key. Name it Autorun. 
+Right-click -> New -> String Value
+
+4. Right-click it and Modify the Value data. 
+
+Right-click -> Modify -> Value data -> DOSKEY /MACROFILE="C:\bat\macros.doskey"
+Good to go.
+
+note when used as .doskey no need to explicitly mention each command is doskey
+**/
+
 doskey 127=start c:\software\putty\putty.exe -ssh  10.20.172.XXX -l clstradm -pw XXXXXX 
 doskey 129=start c:\software\putty\putty.exe -ssh  10.20.172.XXX -l clstradm -pw XXXXXX 
 doskey wsedit=gvim ws.bat
